@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 dotenv.config();
 const TOKEN = process.env.DISCORD_TOKEN;
-console.log(TOKEN);
 const clientId = process.env.APP_ID;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
