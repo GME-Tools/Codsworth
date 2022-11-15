@@ -72,7 +72,7 @@ export const command = {
       }
       
       const blockId = response.results[0].id;
-      console.log(await listTypes(notion,blockId,'table'))
+      /*console.log(*/await listTypes(notion,blockId,'column')/*)*/
       /*const res = await notion.blocks.children.list({
         block_id: blockId,
       });
