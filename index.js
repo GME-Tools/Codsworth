@@ -1,5 +1,6 @@
-import { Client, Collection, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
 import dotenv from 'dotenv';
+import { Client, Collection, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
+import inventoryManager from './notion/inventory.js';
 import fs from 'fs';
 dotenv.config();
 const TOKEN = process.env.DISCORD_TOKEN;
@@ -61,4 +62,5 @@ client.on(Events.InteractionCreate, async  interaction => {	if (!interaction.isC
 });
 
 client.login(TOKEN);
+inventoryManager();
 import './keep_alive.js';
