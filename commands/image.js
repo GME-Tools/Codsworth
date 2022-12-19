@@ -18,12 +18,23 @@ export const command = {
     const text = interaction.options.getString("prompt");
     await interaction.reply('...');
     
-    const response = await openai.createImage({
-      prompt: text,
-      n: 1,
-      size: "1024x1024",
-    });
+    try {
+      const response = await openai.createImage({
+        prompt: text,
+        n: 1,
+        size: "1024x1024",
+      });
 
-    return await interaction.editReply("*Prompt: " + text + "*\n" + response.data.data[0].url);
+      if (response.status === 200) {
+        return await interaction.editReply("*Prompt: " + text + "*\n" + response.data.data[0].url);
+      }
+      else {
+        return await interaction.editReply("Désolé, une erreur s'est produite")
+      }  
+    } catch(error) {
+      return await interaction.editReply("Désolé, une erreur s'est produite")
+    }
+
+    
  }
 }
