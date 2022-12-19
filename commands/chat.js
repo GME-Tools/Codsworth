@@ -1,13 +1,5 @@
-//import { ChatGPTAPIBrowser } from 'chatgpt';
 import { SlashCommandBuilder } from 'discord.js';
 import { Configuration, OpenAIApi } from "openai";
-
-/*const api = new ChatGPTAPIBrowser({
-  email: process.env.OPENAI_EMAIL,
-  password: process.env.OPENAI_PASSWORD,
-	executablePath: process.env.CHAT_GPT_BROWSER_EXECUTABLE_PATH
-})
-await api.initSession()*/
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -28,7 +20,6 @@ export const command = {
     buffer.push(text);
     if (buffer.length > 10) buffer.shift();
     await interaction.reply('...');
-    //const result = await api.sendMessage(text)
     
     try {
       const response = await openai.createCompletion({
