@@ -3,7 +3,12 @@ import { Client, Collection, Events, GatewayIntentBits, REST, Routes } from 'dis
 //import inventoryManager from './notion/inventory.js';
 import path from 'path';
 import fs from 'fs';
-dotenv.config();
+
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
 const TOKEN = process.env.DISCORD_TOKEN;
 const clientId = process.env.APP_ID;
 
@@ -14,7 +19,7 @@ client.once(Events.ClientReady, c => {
 	console.log('Connecté en tant que ' + c.user.tag);
 });
 
-const cmdPath = path.join(__dirname,'/commands');
+const cmdPath = path.join(__dirname,'/commands/');
 const commandFiles = fs	.readdirSync(cmdPath)
 	.filter(file => file.endsWith('.js'));
 
