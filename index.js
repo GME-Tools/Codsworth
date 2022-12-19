@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Client, Collection, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
 //import inventoryManager from './notion/inventory.js';
+import path from 'path';
 import fs from 'fs';
 dotenv.config();
 const TOKEN = process.env.DISCORD_TOKEN;
@@ -13,17 +14,18 @@ client.once(Events.ClientReady, c => {
 	console.log('Connecté en tant que ' + c.user.tag);
 });
 
-const commandFiles = fs	.readdirSync('./commands')
+const cmdPath = path.join(__dirname,'/commands');
+const commandFiles = fs	.readdirSync(cmdPath)
 	.filter(file => file.endsWith('.js'));
 
 const commands = []
 for (const file of commandFiles) {
-	const { command } = await import(`./commands/${file}`);
+	const { command } = await import(`${cmdPath}${file}`);
 	if ('data' in command && 'execute' in command) {
 		client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
 	} else {
-		console.log(`[WARNING] The command at ./commands/${file} is missing a required "data" or "execute" property.`);
+		console.log(`[WARNING] The command at ${cmdPath}${file} is missing a required "data" or "execute" property.`);
 	}
 }
 
@@ -63,4 +65,4 @@ client.on(Events.InteractionCreate, async  interaction => {	if (!interaction.isC
 
 client.login(TOKEN);
 //inventoryManager();
-import './keep_alive.js';
+//import './keep_alive.js';
