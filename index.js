@@ -25,7 +25,7 @@ const commandFiles = fs	.readdirSync(cmdPath)
 
 const commands = []
 for (const file of commandFiles) {
-	const { command } = await import(`${cmdPath}${file}`);
+	const { command } = await import(`file://${cmdPath}${file}`);
 	if ('data' in command && 'execute' in command) {
 		client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
