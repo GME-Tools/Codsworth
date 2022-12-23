@@ -15,8 +15,8 @@ export const command = {
         .setDescription("Describe the image you want")
         .setRequired(true)),
   execute: async (interaction) => {
-    const text = interaction.options.getString("prompt");
     await interaction.reply('...');
+    const text = interaction.options.getString("prompt");
     
     try {
       const response = await openai.createImage({

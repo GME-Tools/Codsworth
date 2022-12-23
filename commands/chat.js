@@ -16,10 +16,10 @@ export const command = {
         .setDescription("What you say to Codsworth")
         .setRequired(true)),
   execute: async (interaction) => {
+    await interaction.reply('...');
     const text = interaction.options.getString("prompt");
     buffer.push(text);
     if (buffer.length > 10) buffer.shift();
-    await interaction.reply('...');
     
     try {
       const response = await openai.createCompletion({
