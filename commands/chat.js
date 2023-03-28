@@ -18,23 +18,20 @@ export const command = {
   execute: async (interaction) => {
     await interaction.reply('...');
     const text = interaction.options.getString("prompt");
-    buffer.push(text);
+    buffer.push({role: "user", content: text});
     if (buffer.length > 10) buffer.shift();
-    
+  
     try {
-      const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: buffer.join('\n'),
-        temperature: 0.7,
-        max_tokens: 2048,
-        n: 1
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: buffer
       });
     
       if (response.status === 200) {
-        const res = response.data.choices[0].text;
+        const res = response.data.choices[0].message;
         buffer.push(res);
         if (buffer.length > 10) buffer.shift();
-        return await interaction.editReply("*Prompt: " + text + "*\n" + res);
+        return await interaction.editReply("*Prompt: " + text + "*\n" + res.content);
       }
       else {
         return await interaction.editReply("Désolé, une erreur s'est produite")
